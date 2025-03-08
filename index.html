@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A collection of delicious recipes with ratings and reviews.">
+    <meta name="author" content="William Hansen">
+    <meta property="og:title" content="Recipe Book">
+    <meta property="og:type" content="website">
+    <meta property="og:description" content="Find and share amazing recipes!">
+    <meta property="og:image" content="images/recipe-book.png">
+    <meta property="og:url" content="https://yourwebsite.com">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="icon" href="favicon.ico">
+    <link rel="stylesheet" href="recipes.css">
+    <title>Recipe Book</title>
+</head>
+<body>
+
+    <header>
+        <img src="images/recipe-book.png" alt="Recipe Book Logo" width="50" height="50">
+        <h1>Recipe Book</h1>
+    </header>
+
+    <main>
+        <section class="search">
+            <label for="search" class="visually-hidden">Search for recipes</label>
+            <input type="text" id="search" placeholder="Search for recipes..." aria-label="Search for recipes">
+            <button onclick="searchRecipes()" aria-label="Search">Search</button>
+        </section>
+
+        <section class="recipes" role="region" aria-live="polite">
+            <!-- Recipes will load dynamically -->
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Recipe Book</p>
+        <p>
+            <a href="https://www.flaticon.com/free-icons/recipe" title="recipe icons">Icons by Freepik - Flaticon</a>
+        </p>
+        <div class="social">
+            <a href="#" aria-label="Instagram"><img src="images/instagram_icon.svg" alt="Instagram"></a>
+            <a href="#" aria-label="YouTube"><img src="images/youtube_icon.svg" alt="YouTube"></a>
+            <a href="#" aria-label="Pinterest"><img src="images/pinterest_icon.svg" alt="Pinterest"></a>
+        </div>
+    </footer>
+
+    <script src="recipes.mjs" type="module"></script>
+    <script src="main.js"></script>
+
+</body>
+</html>
