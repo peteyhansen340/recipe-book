@@ -9,7 +9,7 @@ export const recipes = [
     {
         id: 2,
         name: "Chocolate Cake",
-        image: "images/apple-crisp.jpg",
+        image: "",
         rating: 5,
         description: "A moist and delicious chocolate cake with creamy frosting."
     },
