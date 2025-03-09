@@ -21,7 +21,7 @@ function loadRecipes() {
         recipeCard.innerHTML = `
             <img src="${recipe.image}" alt="${recipe.name}">
             <h2>${recipe.name}</h2>
-            <div class="rating" aria-label="Rating: ${recipe.rating} out of 5 stars">
+            <div class="rating" role="img" aria-label="Rating: ${recipe.rating} out of 5 stars">
                 ${renderStars(recipe.rating)}
             </div>
             <p class="description">${recipe.description}</p>
@@ -36,7 +36,8 @@ function loadRecipes() {
 function renderStars(rating) {
     let stars = "";
     for (let i = 1; i <= 5; i++) {
-        stars += `<span class="${i <= rating ? "icon-star" : "icon-star-empty"}">⭐</span>`;
+        // Add filled or empty star classes based on the rating
+        stars += `<span aria-hidden="true" class="${i <= rating ? "icon-star" : "icon-star-empty"}">⭐</span>`;
     }
     return stars;
 }
@@ -60,7 +61,9 @@ function searchRecipes() {
             recipeCard.innerHTML = `
                 <img src="${recipe.image}" alt="${recipe.name}">
                 <h2>${recipe.name}</h2>
-                <div class="rating">${renderStars(recipe.rating)}</div>
+                <div class="rating" role="img" aria-label="Rating: ${recipe.rating} out of 5 stars">
+                    ${renderStars(recipe.rating)}
+                </div>
                 <p class="description">${recipe.description}</p>
             `;
 
