@@ -1,11 +1,17 @@
 import { recipes } from "./recipes.mjs";
 
 document.addEventListener("DOMContentLoaded", () => {
+    console.log("DOM fully loaded. Loading recipes...");
     loadRecipes();
 });
 
 function loadRecipes() {
     const recipesContainer = document.querySelector(".recipes");
+    if (!recipesContainer) {
+        console.error("Error: .recipes container not found!");
+        return;
+    }
+
     recipesContainer.innerHTML = "";
 
     recipes.forEach(recipe => {
@@ -23,6 +29,8 @@ function loadRecipes() {
 
         recipesContainer.appendChild(recipeCard);
     });
+
+    console.log("Recipes loaded successfully.");
 }
 
 function renderStars(rating) {
