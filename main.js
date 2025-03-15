@@ -15,13 +15,13 @@ function getRandomRecipe() {
 function generateRecipeHTML(recipe) {
     return `
         <div class="recipe-card">
-            <img src="${recipe.image}" alt="${recipe.name}">
-            <h2>${recipe.name}</h2>
-            <div class="rating" role="img" aria-label="Rating: ${recipe.rating} out of 5 stars">
+            <img src="${recipe.image}" alt="${recipe.name}" class="recipe-image">
+            <h2 class="recipe-name">${recipe.name}</h2>
+            <div class="recipe-rating" role="img" aria-label="Rating: ${recipe.rating} out of 5 stars">
                 ${generateRatingStars(recipe.rating)}
             </div>
-            <p class="description">${recipe.description}</p>
-            <div class="tags">
+            <p class="recipe-description">${recipe.description}</p>
+            <div class="recipe-tags">
                 ${generateTagsHTML(recipe.tags)}
             </div>
         </div>
@@ -30,9 +30,9 @@ function generateRecipeHTML(recipe) {
 
 // Template function to generate HTML for tags
 function generateTagsHTML(tags) {
-    if (!tags || tags.length === 0) return "<p>No tags available.</p>";
+    if (!tags || tags.length === 0) return "<p class='no-tags'>No tags available.</p>";
     
-    return tags.map(tag => `<span class="tag">${tag}</span>`).join(" ");
+    return tags.map(tag => `<span class="recipe-tag">${tag}</span>`).join(" ");
 }
 
 // Template function to generate rating stars
@@ -56,9 +56,33 @@ function init() {
     }
 }
 
+// Search functionality for filtering recipes
+function searchRecipes() {
+    const searchInput = document.getElementById("search").value.toLowerCase();
+    const filteredRecipes = recipes.filter(recipe =>
+        recipe.name.toLowerCase().includes(searchInput)
+    );
+
+    const recipesContainer = document.querySelector(".recipes");
+    recipesContainer.innerHTML = "";
+
+    if (filteredRecipes.length === 0) {
+        recipesContainer.innerHTML = "<p>No recipes found.</p>";
+    } else {
+        filteredRecipes.forEach(recipe => {
+            const recipeCard = document.createElement("div");
+            recipeCard.classList.add("recipe-card");
+            recipeCard.innerHTML = generateRecipeHTML(recipe);
+            recipesContainer.appendChild(recipeCard);
+        });
+    }
+}
+
+// Event listener to handle search input
+document.getElementById("search").addEventListener("input", searchRecipes);
+
 // Wait for the DOM to fully load and then run the init function
 document.addEventListener("DOMContentLoaded", () => {
     console.log("DOM fully loaded. Rendering a random recipe...");
     init();
 });
-
