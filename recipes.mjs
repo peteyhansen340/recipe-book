@@ -17,11 +17,27 @@ export const recipes = [
     },
     {
         id: 3,
+        name: "Chocolate Chip Cookies",
+        image: "images/chocolate-chip-cookies.jpg",
+        rating: 3,
+        description: "Soft and perfect cookies",
+        tags: ["Sweets", "Dessert"]
+    },
+    {
+        id: 4,
         name: "Roasted Potatoes",
         image: "images/roasted-potatoes.webp",
         rating: 3,
         description: "Who doesn't like a good potato dish!",
         tags: ["Vegetarian", "Side Dish"]
+    },
+    {
+        id: 5,
+        name: "Black Beans Rice",
+        image: "images/black-beans-and-rice.jpg",
+        rating: 2,
+        description: "A classic dish all will like",
+        tags: ["Quick", "Side Dish"]
     }
 ];
 
