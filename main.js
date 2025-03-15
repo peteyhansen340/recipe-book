@@ -3,6 +3,9 @@ import { recipes } from "./recipes.mjs";
 document.addEventListener("DOMContentLoaded", () => {
     console.log("DOM fully loaded. Loading recipes...");
     loadRecipes();
+
+    // Add event listener for the search button
+    document.querySelector("#search button").addEventListener("click", searchRecipes);
 });
 
 function loadRecipes() {
@@ -36,14 +39,21 @@ function loadRecipes() {
 function renderStars(rating) {
     let stars = "";
     for (let i = 1; i <= 5; i++) {
-        // Add filled or empty star classes based on the rating
-        stars += `<span aria-hidden="true" class="${i <= rating ? "icon-star" : "icon-star-empty"}">⭐</span>`;
+        stars += `<span role="img" aria-hidden="true" class="${i <= rating ? "icon-star" : "icon-star-empty"}">⭐</span>`;
     }
     return stars;
 }
 
-function searchRecipes() {
+function searchRecipes(e) {
+    e.preventDefault();  // Prevents form submission or default button behavior
+
     const searchInput = document.getElementById("search").value.toLowerCase();
+
+    if (searchInput.trim() === "") {
+        loadRecipes(); // If search input is empty, load all recipes again
+        return;
+    }
+
     const filteredRecipes = recipes.filter(recipe =>
         recipe.name.toLowerCase().includes(searchInput)
     );
