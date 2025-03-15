@@ -76,8 +76,15 @@ button:hover {
     border-radius: 5px;
 }
 
-.rating {
+
+.icon-star {
     color: gold;
+    font-size: 1.5em;
+}
+
+.icon-star-empty {
+    color: gray;
+    font-size: 1.5em;
 }
 
 footer {
