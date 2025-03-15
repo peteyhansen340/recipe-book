@@ -1,83 +1,64 @@
 import { recipes } from "./recipes.mjs";
 
-document.addEventListener("DOMContentLoaded", () => {
-    console.log("DOM fully loaded. Loading recipes...");
-    loadRecipes();
+// Generate a random number >= 0 and < num
+function getRandomNumber(num) {
+    return Math.floor(Math.random() * num);
+}
 
-    // Add event listener for the search button
-    document.querySelector("#search button").addEventListener("click", searchRecipes);
-});
+// Function to get a random recipe
+function getRandomRecipe() {
+    const randomIndex = getRandomNumber(recipes.length);
+    return recipes[randomIndex];
+}
 
-function loadRecipes() {
-    const recipesContainer = document.querySelector(".recipes");
-    if (!recipesContainer) {
-        console.error("Error: .recipes container not found!");
-        return;
-    }
-
-    recipesContainer.innerHTML = "";
-
-    recipes.forEach(recipe => {
-        const recipeCard = document.createElement("div");
-        recipeCard.classList.add("recipe-card");
-
-        recipeCard.innerHTML = `
+// Template function to generate HTML for a recipe
+function generateRecipeHTML(recipe) {
+    return `
+        <div class="recipe-card">
             <img src="${recipe.image}" alt="${recipe.name}">
             <h2>${recipe.name}</h2>
             <div class="rating" role="img" aria-label="Rating: ${recipe.rating} out of 5 stars">
-                ${renderStars(recipe.rating)}
+                ${generateRatingStars(recipe.rating)}
             </div>
             <p class="description">${recipe.description}</p>
-        `;
-
-        recipesContainer.appendChild(recipeCard);
-    });
-
-    console.log("Recipes loaded successfully.");
+            <div class="tags">
+                ${generateTagsHTML(recipe.tags)}
+            </div>
+        </div>
+    `;
 }
 
-function renderStars(rating) {
+// Template function to generate HTML for tags
+function generateTagsHTML(tags) {
+    if (!tags || tags.length === 0) return "<p>No tags available.</p>";
+    
+    return tags.map(tag => `<span class="tag">${tag}</span>`).join(" ");
+}
+
+// Template function to generate rating stars
+function generateRatingStars(rating) {
     let stars = "";
     for (let i = 1; i <= 5; i++) {
-        stars += `<span role="img" aria-hidden="true" class="${i <= rating ? "icon-star" : "icon-star-empty"}">⭐</span>`;
+        stars += `<span aria-hidden="true" class="${i <= rating ? "icon-star" : "icon-star-empty"}">⭐</span>`;
     }
     return stars;
 }
 
-function searchRecipes(e) {
-    e.preventDefault();  // Prevents form submission or default button behavior
-
-    const searchInput = document.getElementById("search").value.toLowerCase();
-
-    if (searchInput.trim() === "") {
-        loadRecipes(); // If search input is empty, load all recipes again
-        return;
-    }
-
-    const filteredRecipes = recipes.filter(recipe =>
-        recipe.name.toLowerCase().includes(searchInput)
-    );
-
-    const recipesContainer = document.querySelector(".recipes");
-    recipesContainer.innerHTML = "";
-
-    if (filteredRecipes.length === 0) {
-        recipesContainer.innerHTML = "<p>No recipes found.</p>";
+// Initialize and render a random recipe when the page loads
+function init() {
+    const randomRecipe = getRandomRecipe();
+    const recipeContainer = document.querySelector(".recipes");
+    
+    if (recipeContainer) {
+        recipeContainer.innerHTML = generateRecipeHTML(randomRecipe);
     } else {
-        filteredRecipes.forEach(recipe => {
-            const recipeCard = document.createElement("div");
-            recipeCard.classList.add("recipe-card");
-
-            recipeCard.innerHTML = `
-                <img src="${recipe.image}" alt="${recipe.name}">
-                <h2>${recipe.name}</h2>
-                <div class="rating" role="img" aria-label="Rating: ${recipe.rating} out of 5 stars">
-                    ${renderStars(recipe.rating)}
-                </div>
-                <p class="description">${recipe.description}</p>
-            `;
-
-            recipesContainer.appendChild(recipeCard);
-        });
+        console.error("Error: .recipes container not found!");
     }
 }
+
+// Wait for the DOM to fully load and then run the init function
+document.addEventListener("DOMContentLoaded", () => {
+    console.log("DOM fully loaded. Rendering a random recipe...");
+    init();
+});
+
